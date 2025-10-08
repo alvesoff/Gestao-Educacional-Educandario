@@ -5,19 +5,33 @@ import * as XLSX from 'xlsx';
 export const dynamic = 'force-dynamic';
 
 export async function POST(request: NextRequest) {
+  let anoLetivo = '2025';
+  let bimestre, turma, disciplina, aluno, tipo = 'faltas', tipoFalta = 'detalhadas', dataInicio, dataFim;
+  
   try {
     const body = await request.json();
-    const { 
-      anoLetivo = '2025', 
-      bimestre, 
-      turma, 
-      disciplina, 
-      aluno, 
-      tipo = 'faltas',
-      tipoFalta = 'detalhadas',
-      dataInicio,
-      dataFim
-    } = body;
+    const bodyData = { 
+      anoLetivo: body.anoLetivo || '2025', 
+      bimestre: body.bimestre, 
+      turma: body.turma, 
+      disciplina: body.disciplina, 
+      aluno: body.aluno, 
+      tipo: body.tipo || 'faltas',
+      tipoFalta: body.tipoFalta || 'detalhadas',
+      dataInicio: body.dataInicio,
+      dataFim: body.dataFim
+    };
+    
+    // Atribuir às variáveis do escopo da função
+    anoLetivo = bodyData.anoLetivo;
+    bimestre = bodyData.bimestre;
+    turma = bodyData.turma;
+    disciplina = bodyData.disciplina;
+    aluno = bodyData.aluno;
+    tipo = bodyData.tipo;
+    tipoFalta = bodyData.tipoFalta;
+    dataInicio = bodyData.dataInicio;
+    dataFim = bodyData.dataFim;
 
     let query = '';
     let params: any[] = [anoLetivo];
@@ -250,7 +264,17 @@ export async function POST(request: NextRequest) {
     console.error('Message:', error instanceof Error ? error.message : 'Erro desconhecido');
     console.error('Stack:', error instanceof Error ? error.stack : 'Sem stack trace');
     console.error('Tipo do erro:', typeof error);
-    console.error('Parâmetros recebidos:', { anoLetivo, bimestre, turma, disciplina, aluno, tipo, tipoFalta, dataInicio, dataFim });
+    console.error('Parâmetros recebidos:', JSON.stringify({ 
+      anoLetivo: anoLetivo || 'não definido', 
+      bimestre: bimestre || 'não definido', 
+      turma: turma || 'não definido', 
+      disciplina: disciplina || 'não definido', 
+      aluno: aluno || 'não definido', 
+      tipo: tipo || 'não definido', 
+      tipoFalta: tipoFalta || 'não definido', 
+      dataInicio: dataInicio || 'não definido', 
+      dataFim: dataFim || 'não definido' 
+    }));
     
     return NextResponse.json({
       success: false,
