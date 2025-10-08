@@ -1,0 +1,3 @@
+Deploy trigger - $(Get-Date)
+Este arquivo força um novo deploy na Vercel para garantir que o commit mais recente seja deployado.
+Commit atual: 3ba15b3
