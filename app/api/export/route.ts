@@ -245,11 +245,19 @@ export async function POST(request: NextRequest) {
     });
 
   } catch (error) {
-    console.error('Erro ao gerar arquivo Excel:', error);
+    console.error('=== ERRO DETALHADO NA EXPORTAÇÃO ===');
+    console.error('Erro completo:', error);
+    console.error('Message:', error instanceof Error ? error.message : 'Erro desconhecido');
+    console.error('Stack:', error instanceof Error ? error.stack : 'Sem stack trace');
+    console.error('Tipo do erro:', typeof error);
+    console.error('Parâmetros recebidos:', { anoLetivo, bimestre, turma, disciplina, aluno, tipo, tipoFalta, dataInicio, dataFim });
+    
     return NextResponse.json({
       success: false,
       error: 'Erro ao gerar arquivo Excel',
-      details: error instanceof Error ? error.message : 'Erro desconhecido'
+      details: error instanceof Error ? error.message : 'Erro desconhecido',
+      errorType: typeof error,
+      stack: error instanceof Error ? error.stack : null
     }, { status: 500 });
   }
 }
