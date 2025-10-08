@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
+import LogoutButton from '../components/LogoutButton'
 
 const inter = Inter({ subsets: ['latin'] })
 
@@ -23,11 +24,14 @@ export default function RootLayout({
               <div className="flex justify-between items-center py-4">
                 <div className="flex items-center">
                   <h1 className="text-2xl font-bold text-gray-900">
-                    Sistema de Gestão Educacional
+                    EDUCANDÁRIO GESTÃO
                   </h1>
                 </div>
-                <div className="text-sm text-gray-500">
-                  Relatórios de Notas e Faltas
+                <div className="flex items-center space-x-4">
+                  <div className="text-sm text-gray-500">
+                    Relatórios de Notas e Faltas
+                  </div>
+                  <LogoutButton />
                 </div>
               </div>
             </div>
